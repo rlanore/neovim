@@ -1,0 +1,11 @@
+# This is a test file for settings nvim
+
+# ignore cas
+
+AAA
+aaa
+
+# iskeyword
+
+this_is_word
+this-is-word
