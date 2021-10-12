@@ -24,10 +24,13 @@ utils.opt( 'o', 'autochdir', true )
 utils.opt( 'o', 'clipboard', 'unnamed')
 utils.opt( 'o', 'updatetime', 500)
 utils.opt( 'o', 'pastetoggle', '<F4>')
+--utils.opt( 'o', 'termguicolors', true)
 utils.opt( 'o', 'showmode', false ) -- Don't show replaced by airline status
 
 vim.opt.iskeyword:append("-")
 
+-- This is mandatory vim-numbertoggle plugins
+utils.opt( 'w', 'number', true )
 utils.opt( 'w', 'relativenumber', true )
 
 utils.opt( 'b', 'tabstop', 2 )

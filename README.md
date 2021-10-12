@@ -11,6 +11,33 @@ To do a quick test with nvim 0.5.x
 
 ```bash
 chmod u+x nvim.appimage
-XDG_CONFIG_HOME="`pwd`" ./nvim.appimage
+XDG_DATA_HOME="`pwd`" XDG_CONFIG_HOME="`pwd`" ./nvim.appimage
+```
+
+## Nvim tips and tricks
+
+* Open file under cursor
+
+```vim
+gf:       Open in new buffer
+C-w f gf: Open in hslplit
+C-w v gf: Open in vsplit
+```
+
+
+* Show some mappings
+
+```vim
+:nmap
+:imap
+:vmap
+```
+
+
+* Show some config path
+
+```vim
+:echo stdpath("config")
+:echo stdpath("data")
 ```
 

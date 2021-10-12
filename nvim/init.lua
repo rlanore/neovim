@@ -1,30 +1,92 @@
 --/* cSpell:disable */
--- Some info before
--- Show current mappings
--- :nmap
--- :imap
--- :vmap
+local cmd = vim.cmd
 -- Paste into command line: Ctrl+r+0
--- Open file under cursor: gf ( buffer ), hsplit: C-w f, vsplit: C-w v + gf
---
---
 -- Change leader key (default as \)
 vim.g.mapleader = ' '
 
 -- Key mappings
 require('keymappings')
 
+-- Plugins
+require('plugins')
+
 -- Settings
 require('settings')
 
+-- Set vim-hexokinase options
+vim.g.Hexokinase_highlighters = { 'backgroundfull' }
+vim.g.Hexokinase_optInPatterns = {
+  'full_hex', 'rgb', 'rgba', 'hsl', 'hsla', 'colour_names'
+}
+
+-- To workarround of tab use into coc plugin
+vim.g.UltiSnipsExpandTrigger = "<nop>"
+
+vim.g.calendar_week_number=1
+
+-- Tell markdownPreview to use qutebrowser
+vim.g.mkdp_browser = 'qutebrowser'
+
+-- Set active color parentesis
+vim.g.rainbow_active = 1
+
+-- Set quick-scope option
+vim.g.qs_highlight_on_keys = { 'f', 'F', 't', 'T' }
+cmd [[highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline]]
+cmd [[highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline]]
+
+-- Load vim-devicons
+vim.g.webdevicons_enable = 1
+vim.g.webdevicons_enable_startify = 1
+
 -- Open file in last position
---if has('nvim')
---autocmd BufReadPost *
---  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
---  \ |   exe "normal! g`\""
---  \ | endif
---endif
+cmd [[autocmd BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+  \ |   exe "normal! g`\""
+  \ | endif
+]]
+
+-- lualine config ( status line write in lua )
+require('lualine').setup{
+  options = {
+    theme = 'molokai'
+  },
+  tabline = {
+    lualine_a = {},
+    lualine_b = {'branch'},
+    lualine_c = {'filename'},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  }
+}
+
+-- AirLine config
+--vim.g.airline_powerline_fonts = 1
+--vim.g.airline#extensions#tabline#enabled = 1
+--vim.g.airline_theme='molokai'
+--"let g:airline_theme='deus'
+--"let g:airline_theme='onedark'
+--"let g:airline_theme='monokai'
 --
+
+-- Set rnvimr option
+  -- Use ranger when open dir with vim
+vim.g.rnvimr_ex_enable = 1
+  -- Make Ranger to be hidden after picking a file
+vim.g.rnvimr_pick_enable = 1
+
+-- Set auto insert and number on terminal mode
+cmd [[autocmd TermOpen * startinsert ]]
+cmd [[ augroup TerminalStuff
+    au! 
+    autocmd TermOpen * setlocal nonumber norelativenumber
+  augroup END
+]]
+
+-- Load telescope extension
+require('telescope').load_extension('fzf')
+
 --" Load personal plugin
 --" PlugInstall vim command to install new plugin
 --call plug#begin()
@@ -169,31 +231,7 @@ require('settings')
 --        \]
 --endif
 --
---" Show | for indent
---Plug 'Yggdroot/indentLine'
---" Status bar
---Plug 'vim-airline/vim-airline'
---Plug 'vim-airline/vim-airline-themes'
---" Snippet completion
---Plug 'SirVer/ultisnips'
---  " To workarround of tab use into coc plugin
---  let g:UltiSnipsExpandTrigger = "<nop>"
---Plug 'honza/vim-snippets'
---" Calendar
---Plug 'itchyny/calendar.vim'
---let g:calendar_week_number=1
 --
---" More human understanding maximizer
---Plug 'szw/vim-maximizer'
---" F3 MaximizerToggle
---nnoremap <C-w>z :MaximizerToggle<CR>
---"nnoremap <C-w>o :MaximizerToggle<CR>
---
---" Toogle number and relativenumber on focus
---Plug 'jeffkreeftmeijer/vim-numbertoggle'
---
---" To show color from code
---Plug 'lilydjwg/colorizer'
 --
 --" Fuzy finder (:FZF cur dir, :FZF ~. C-T,C-X, C-V ) 
 --" Somme command:
@@ -223,42 +261,6 @@ require('settings')
 --" Use fzf instead of coc list builtin
 --Plug 'antoinemadec/coc-fzf'
 --
---" Ranger plugin is to navigate some file and show content as same time
---" call ranger by '\f'. '\' is default <leader> vim key
---Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
---  "tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
---  nnoremap <silent> <leader>o :RnvimrToggle<CR>
---  "tnoremap <silent> <M-o> <C-\><C-n>:RnvimrToggle<CR>
---  " Use ranger when open dir with vim
---  let g:rnvimr_ex_enable = 1
---  " Make Ranger to be hidden after picking a file
---  let g:rnvimr_pick_enable = 1
---
---" Open bowser new tab and render ( :MarkdownPreview )
---Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
---
---" Make some git 
---"   :Gwrite = git add 
---"   :Gcommit 
---"   :Gpush
---"   :Git = git status
---Plug 'tpope/vim-fugitive'
---  "nmap <leader>g :Git<CR>
---  nmap <leader>ga :Gwrite<CR>
---  nmap <leader>gc :Gcommit<CR>
---
---" Add column with update line
---" Show git update line into column
---Plug 'airblade/vim-gitgutter'
---
---" Auto add [ ( {
---Plug 'jiangmiao/auto-pairs'
---
---" Color parentesis and like
---"Plug 'frazrepo/vim-rainbow'
---  let g:rainbow_active = 1
---Plug 'luochen1990/rainbow'
---let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle"
 --
 --" Vim key reminder ( active on demand )
 --" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
@@ -273,63 +275,11 @@ require('settings')
 --    \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 --  source ~/.vim/which_key_dict.vim
 --
---"Nice start page
---Plug 'mhinz/vim-startify'
---
---" Color first char of word for jump to
---Plug 'unblevable/quick-scope' 
---  let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
---  highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
---  highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
---
---" Add Compare when swap file detected
---"Plug 'chrisbra/Recover'
---
 --" Logstash highlight
 --Plug 'robbles/logstash.vim'
 --
---" Load icon
---Plug 'ryanoasis/vim-devicons'
---let g:webdevicons_enable = 1
---let g:webdevicons_enable_startify = 1
 --
 --call plug#end()
---
---if has('nvim')
---  augroup TerminalStuff
---    au! 
---    autocmd TermOpen * setlocal nonumber norelativenumber
---  augroup END
---else
---  augroup TerminalStuff
---    au! 
---    autocmd TerminalOpen * setlocal nonumber norelativenumber
---  augroup END
---end
---
---" ----------------------------------------------------------------------------
---" :Root | Change directory to the root of the Git repository
---" ----------------------------------------------------------------------------
---function! s:root()
---  let root = systemlist('git rev-parse --show-toplevel')[0]
---  if v:shell_error
---    echo 'Not in git repo'
---  else
---    execute 'lcd' root
---    echo 'Changed directory to: '.root
---  endif
---endfunction
---command! Root call s:root()
---
---" ----------------------------------------------------------------------------
---" :Rgitcls | Change directory to the root of the Git repository
---" ----------------------------------------------------------------------------
---function! s:rgitcls()
---  let gitcls = system('echo ${HOME}/Documents/git/cls')
---  execute 'lcd' gitcls
---  echo 'Changed directory to: ' gitcls
---endfunction
---command! Rgitcls call s:rgitcls()
 --
 --" Use emoji-fzf and fzf to fuzzy-search for emoji, and insert the result
 --function! InsertEmoji(emoji)
@@ -360,14 +310,6 @@ require('settings')
 --highlight Search cterm=bold ctermfg=253 ctermbg=67 gui=bold guifg=#f8f8f0 guibg=#465457
 --"highlight DiffChange ctermbg=5 guibg=
 --
---if has("nvim")
---  " Remapping key
---  "command Vt :vs|:term
---  "command Ht :sp|:term
---  autocmd TermOpen * startinsert
---endif
---
---
 --" Exit terminal Mode
 --"tnoremap <C-Space> <C-\><C-N>
 --"tnoremap <C-@> <C-\><C-N>
@@ -375,13 +317,6 @@ require('settings')
 --"tnoremap <Esc> :call coc#float#close_all() <CR>
 --
 --
---" AirLine config
---let g:airline_powerline_fonts = 1
---let g:airline#extensions#tabline#enabled = 1
---let g:airline_theme='molokai'
---"let g:airline_theme='deus'
---"let g:airline_theme='onedark'
---"let g:airline_theme='monokai'
 --
 --" Debug
 --"let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_py3_debug.log"
