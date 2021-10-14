@@ -1,0 +1,18 @@
+( parenthesis work )
+
+{ brakets work }
+
+[ square work ]
+
+" quote also work"
+
+' single quote work'
+
+function( test ) {
+  function() {
+
+  }
+
+}
+
+// vim: set ft=sh:

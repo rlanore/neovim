@@ -6,20 +6,18 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
 end
 
--- auto PackerCompile when plugins.lua change
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
-
-
 return require('packer').startup(function()
   -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+  use {
+    'wbthomason/packer.nvim',
+    config = function()
+      vim.cmd "autocmd BufWritePost init.lua source <afile> | PackerCompile"
+    end
+  }
   -- Show | for indent
-  use 'Yggdroot/indentLine'
+  use { 
+    'Yggdroot/indentLine' 
+  }
   -- Status bar
   use {
 		'shadmansaleh/lualine.nvim',	
@@ -72,17 +70,37 @@ return require('packer').startup(function()
   -- Ranger plugin is to navigate some file and show content as same time
   use 'kevinhwang91/rnvimr'
 
-  -- Telescope for fzf
+  -- Telescope and extension
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { 'nvim-lua/plenary.nvim' }
   }
   use { 
     'nvim-telescope/telescope-fzf-native.nvim', 
     run = 'make' 
   }
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    requires = {"tami5/sqlite.lua"}
+  }
+	-- TODO install 'nvim-telescope/telescope-media-files.nvim'
+  use 'nvim-telescope/telescope-symbols.nvim'
+  -- remember yanked
+  use "AckslD/nvim-neoclip.lua"
 
+  -- lsp-main
+  use 'neovim/nvim-lspconfig'
+  -- Add some info from LSP to lualine
+  use 'arkav/lualine-lsp-progress'
 
-
+  -- Completion plugin
+  use { 
+    'ms-jpq/coq_nvim',
+    branch = 'coq'
+  }
+  use {
+    'ms-jpq/coq.artifacts',
+    branch = 'artifacts'
+  }
 
 end)
