@@ -23,9 +23,11 @@ return require('packer').startup(function()
 		'shadmansaleh/lualine.nvim',	
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
-  -- Snippet completion
-  use 'SirVer/ultisnips'
-  use 'honza/vim-snippets'
+
+  -- Snippet completion replaced by nvim-coq snippet
+  --use 'SirVer/ultisnips'
+  --use 'fhill2/telescope-ultisnips.nvim'
+
   -- Calendar
   use'itchyny/calendar.vim'
   -- More human understanding maximizer
@@ -65,7 +67,12 @@ return require('packer').startup(function()
 
   -- Add column with update line
   -- Show git update line into column
-  use 'airblade/vim-gitgutter'
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  }
   
   -- Ranger plugin is to navigate some file and show content as same time
   use 'kevinhwang91/rnvimr'
@@ -101,6 +108,19 @@ return require('packer').startup(function()
   use {
     'ms-jpq/coq.artifacts',
     branch = 'artifacts'
+  }
+
+  -- colorscheme
+  use 'navarasu/onedark.nvim'
+  use 'shaunsingh/moonlight.nvim'
+  use 'folke/tokyonight.nvim'
+  use 'EdenEast/nightfox.nvim'
+
+  -- Keymapping remember
+  use {
+    'AckslD/nvim-whichkey-setup.lua',
+    requires = {'liuchengxu/vim-which-key'},
+       
   }
 
 end)

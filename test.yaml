@@ -1,0 +1,8 @@
+root: 
+  test: test
+root2: toto
+image: "test"
+name:
+  - el1
+  - el2
+

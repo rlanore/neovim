@@ -3,6 +3,8 @@
 # ignore cas
 
 AAA
+
+`ls -l`
 aaa
 
 # iskeyword
@@ -10,5 +12,3 @@ aaa
 this_is_word
 this-is-word
 
-   
-            
