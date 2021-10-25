@@ -11,6 +11,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y bash-completion \
       python3-pip \
       nodejs \
+      sqlite3 \
+      libsqlite3-dev \
       git \
       jq \
       procps \

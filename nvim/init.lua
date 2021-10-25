@@ -13,6 +13,9 @@ require('plugins')
 -- Settings
 require('settings')
 
+-- Color and style lualine
+require('colorscheme')
+
 -- Set vim-hexokinase options
 vim.g.Hexokinase_highlighters = { 'backgroundfull' }
 vim.g.Hexokinase_optInPatterns = {
@@ -54,34 +57,6 @@ require('gitsigns').setup{
     delay = 500,
   },
 }
--- lualine config ( status line write in lua )
---require('onedark').setup()
---require('moonlight').set()
---require('tokyonight').setup()
-require('nightfox').load(nordfox)
---vim.g.tokyonight_style = "night"
---vim.g.tokyonight_style = "night"
---vim.cmd[[colorscheme tokyonight]]
--- TODO lsp_progress not work
-require('lualine').setup{
-  options = {
-    theme = 'nightfox'
-  },
-  tabline = {
-    lualine_a = { 'buffers' },
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'filename' },
-    lualine_c = { 'branch', 'lsp_progress' },
-    lualine_x = { 'filetype' }
-  }
-}
 
 -- Set rnvimr option
   -- Use ranger when open dir with vim
@@ -101,8 +76,6 @@ cmd [[ augroup TerminalStuff
 require('telescope').load_extension('fzf')
 require('telescope').load_extension("frecency")
 require('telescope').load_extension('neoclip')
-
-
 require('telescope').setup {
   extensions = {
     frecency = {
@@ -155,6 +128,22 @@ for _, lsp in ipairs(servers) do
     coq.lsp_ensure_capabilities({})
   }
 end
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = true,
+  },
+}
+
+require('nvim-tree').setup{}
 
 --  " Auto install coc extension
 --  let g:coc_global_extensions = [

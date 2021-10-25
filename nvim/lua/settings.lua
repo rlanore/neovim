@@ -5,6 +5,9 @@ local indent = 2
 
 cmd 'syntax enable'
 cmd 'filetype plugin indent on'
+-- Set for tree-sitter
+cmd 'set foldmethod=expr'
+cmd 'set foldexpr=nvim_treesitter#foldexpr()'
 
 -- Set global settings
 -- o = global
@@ -36,3 +39,5 @@ utils.opt( 'w', 'relativenumber', true )
 utils.opt( 'b', 'tabstop', 2 )
 utils.opt( 'b', 'shiftwidth', 2 )
 utils.opt( 'b', 'expandtab', true )
+
+

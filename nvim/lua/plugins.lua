@@ -111,9 +111,6 @@ return require('packer').startup(function()
   }
 
   -- colorscheme
-  use 'navarasu/onedark.nvim'
-  use 'shaunsingh/moonlight.nvim'
-  use 'folke/tokyonight.nvim'
   use 'EdenEast/nightfox.nvim'
 
   -- Keymapping remember
@@ -122,5 +119,20 @@ return require('packer').startup(function()
     requires = {'liuchengxu/vim-which-key'},
        
   }
+
+  -- Tree-sitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    branch = '0.5-compat'
+    --cmd = ':TSUpdate'
+  } 
+
+  -- Nvim Explorer
+  use {
+      'kyazdani42/nvim-tree.lua',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function() require'nvim-tree'.setup {} end
+  }
+
 
 end)
