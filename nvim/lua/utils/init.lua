@@ -23,7 +23,7 @@ function utils.groot()
   local root = handle:read("*a")
   handle:close()
   if (root == nil or root == '') then
-     vim.nvim_echo("Not in git repo")
+    vim.api.nvim_echo({ { 'Not in git repo', 'WarningMsg' } }, false, {})
   else
     vim.cmd('lcd'..root) 
   end
@@ -36,7 +36,7 @@ function utils.rgitcls()
   local root = handle:read("*a")
   handle:close()
   if (root == nil or root == '') then
-     vim.nvim_echo("Not in git repo")
+    vim.api.nvim_echo({ { 'Not in git repo', 'WarningMsg' } }, false, {})
   else
     vim.cmd('lcd'..root) 
   end
